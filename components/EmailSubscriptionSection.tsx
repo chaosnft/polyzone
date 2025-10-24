@@ -31,7 +31,6 @@ export default function EmailSubscriptionSection() {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Stay Updated</h2>
             <p className="text-gray-600 text-lg">Get the latest news delivered to your inbox</p>
           </div>
-
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
             <div className="flex-1 relative">
               <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -53,7 +52,6 @@ export default function EmailSubscriptionSection() {
               Subscribe
             </motion.button>
           </form>
-
           {submitted && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}

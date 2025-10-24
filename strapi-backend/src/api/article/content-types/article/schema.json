@@ -62,11 +62,12 @@
         }
       },
       "required": true,
-      "default": "Business",
+      "default": "Basic",
       "enum": [
-        "Technology",
-        "Business",
-        "Environment"
+        "Basic",
+        "Politics",
+        "Finance",
+        "Cryptocurrency"
       ]
     },
     "image": {
@@ -76,12 +77,10 @@
           "localized": true
         }
       },
-      "multiple": true,
+      "multiple": false,
+      "required": true,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ]
     },
     "date": {
@@ -119,6 +118,12 @@
       },
       "targetField": "title",
       "required": true
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tag.tag",
+      "mappedBy": "articles"
     }
   }
 }

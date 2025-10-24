@@ -1,9 +1,10 @@
-// components/FeaturedNewsSection.tsx
+// components/FeaturedNewsSection.tsx (Fixed: Wrap Next/Image in motion.div for hover scale to resolve TypeScript src error)
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import Image from 'next/image';
 import { Article } from "@/lib/api";
 
 interface Props {
@@ -15,15 +16,12 @@ export default function FeaturedNewsSection({ articles }: Props) {
   const featuredArticles = articles.filter((a) => a.category === "featured");
   const itemsPerPage = 8;
   const totalPages = Math.ceil(featuredArticles.length / itemsPerPage);
-
   const nextFeatured = () => {
     setFeaturedIndex((prev) => (prev + 1) % totalPages);
   };
-
   const prevFeatured = () => {
     setFeaturedIndex((prev) => (prev - 1 + totalPages) % totalPages);
   };
-
   const startIdx = featuredIndex * itemsPerPage;
   const displayArticles = featuredArticles.slice(startIdx, startIdx + itemsPerPage);
   const mainArticle = displayArticles[0];
@@ -45,7 +43,6 @@ export default function FeaturedNewsSection({ articles }: Props) {
           <h2 className="text-4xl font-bold text-gray-900 mb-2">Featured News</h2>
           <p className="text-gray-600">Curated stories and in-depth coverage</p>
         </motion.div>
-
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
           {/* Large Featured Card on Left */}
           {mainArticle && (
@@ -57,13 +54,18 @@ export default function FeaturedNewsSection({ articles }: Props) {
             >
               <Link href={`/article/${mainArticle.slug}`}>
                 <div className="relative h-96 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group cursor-pointer">
-                  <motion.img
-                    src={mainArticle.image}
-                    alt={mainArticle.title}
-                    className="w-full h-full object-cover"
+                  <motion.div
+                    className="relative w-full h-full"
                     whileHover={{ scale: 1.08 }}
                     transition={{ duration: 0.4 }}
-                  />
+                  >
+                    <Image
+                      src={mainArticle.image || '/images/default-article.png'}
+                      alt={mainArticle.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                     <span className="inline-block px-3 py-1 bg-red-500 text-white text-xs font-bold rounded-full mb-3">
@@ -72,15 +74,14 @@ export default function FeaturedNewsSection({ articles }: Props) {
                     <h3 className="text-2xl font-bold mb-2 line-clamp-2">{mainArticle.title}</h3>
                     <p className="text-gray-200 text-sm line-clamp-2 mb-3">{mainArticle.excerpt}</p>
                     <div className="flex items-center gap-4 text-xs">
-                      <span>{mainArticle.author}</span>
-                      <span>{mainArticle.date}</span>
+                      <span className="notranslate">{mainArticle.author}</span>
+                      <span className="notranslate">{mainArticle.date}</span>
                     </div>
                   </div>
                 </div>
               </Link>
             </motion.div>
           )}
-
           {/* Smaller Cards Grid */}
           {otherArticles.map((article, index) => (
             <motion.div
@@ -91,24 +92,28 @@ export default function FeaturedNewsSection({ articles }: Props) {
             >
               <Link href={`/article/${article.slug}`}>
                 <div className="relative h-48 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer">
-                  <motion.img
-                    src={article.image}
-                    alt={article.title}
-                    className="w-full h-full object-cover"
+                  <motion.div
+                    className="relative w-full h-full"
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.4 }}
-                  />
+                  >
+                    <Image
+                      src={article.image || '/images/default-article.png'}
+                      alt={article.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                     <h4 className="text-sm font-bold line-clamp-2 mb-1">{article.title}</h4>
-                    <p className="text-xs text-gray-300">{article.date}</p>
+                    <p className="text-xs text-gray-300 notranslate">{article.date}</p>
                   </div>
                 </div>
               </Link>
             </motion.div>
           ))}
         </div>
-
         {/* Navigation Buttons */}
         <div className="flex justify-center gap-4">
           <motion.button

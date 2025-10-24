@@ -3,32 +3,13 @@ import type { StrapiApp } from '@strapi/strapi/admin';
 export default {
   config: {
     locales: [
-      // 'ar',
-      // 'fr',
-      // 'cs',
-      // 'de',
-      // 'dk',
-      // 'es',
-      // 'he',
-      // 'id',
-      // 'it',
-      // 'ja',
-      // 'ko',
-      // 'ms',
-      // 'nl',
-      // 'no',
-      // 'pl',
-      // 'pt-BR',
-      // 'pt',
-      // 'ru',
-      // 'sk',
-      // 'sv',
-      // 'th',
-      // 'tr',
-      // 'uk',
-      // 'vi',
-      // 'zh-Hans',
-      // 'zh',
+      'en', // English
+      'fr', // French
+      'zh', // Chinese
+      'vi', // Vietnamese
+      'ja', // Japanese
+      'ko', // Korean
+      'ru', // Russian
     ],
   },
   bootstrap(app: StrapiApp) {

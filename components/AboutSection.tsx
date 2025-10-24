@@ -1,6 +1,5 @@
 // components/AboutSection.tsx
-"use client";  // Thêm dòng này ở đầu file
-
+"use client";
 import { motion } from "framer-motion";
 
 export default function AboutSection() {
@@ -13,9 +12,9 @@ export default function AboutSection() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">About NewsHub</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-6">About Polyzone</h2>
           <p className="text-gray-600 text-lg leading-relaxed">
-            NewsHub is your trusted source for real-time news, insightful analysis, and diverse perspectives. 
+            Polyzone is your trusted source for real-time news, insightful analysis, and diverse perspectives.
             We cover global events, technology breakthroughs, business trends, and more to keep you informed and inspired.
           </p>
         </motion.div>
