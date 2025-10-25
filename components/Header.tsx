@@ -111,7 +111,7 @@ export default function Header({ locale: initialLocale = 'en' }: Props) {
           className="flex items-center gap-2"
         >
           <Image 
-            src="/logo.webp" 
+            src="/logo-black.webp" 
             alt="NewsHub Logo" 
             width={120} 
             height={40} 
