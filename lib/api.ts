@@ -1,5 +1,5 @@
-// lib/api.ts (Fixed: Removed client-side Cookies from server functions; use fixed 'en-US' locale for date formatting on server. Client-side can override if needed via re-render.)
-const STRAPI_URL = process.env.STRAPI_URL || "http://localhost:1337";
+// lib/api.ts
+const STRAPI_URL = process.env.STRAPI_URL || "https://worthy-candy-912dcff36f.strapiapp.com";
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN;
 
 export interface Article {
@@ -20,6 +20,11 @@ export interface Article {
 export async function getArticles(
   params: { category?: string; topic?: string; limit?: number } = {}
 ): Promise<Article[]> {
+  if (!STRAPI_API_TOKEN) {
+    console.error("❌ STRAPI_API_TOKEN is not defined in .env");
+    throw new Error("STRAPI_API_TOKEN is required");
+  }
+
   try {
     const query = new URLSearchParams({
       populate: "*",
@@ -30,49 +35,48 @@ export async function getArticles(
     });
 
     const res = await fetch(`${STRAPI_URL}/api/articles?${query.toString()}`, {
-      headers: STRAPI_API_TOKEN
-        ? { Authorization: `Bearer ${STRAPI_API_TOKEN}` }
-        : {},
+      headers: {
+        Authorization: `Bearer ${STRAPI_API_TOKEN}`,
+      },
       next: { revalidate: 60 },
     });
 
     if (!res.ok) {
       console.error("❌ Failed to fetch articles:", res.status, res.statusText);
-      return [];
+      throw new Error(`Failed to fetch articles: ${res.status} ${res.statusText}`);
     }
 
     const json = await res.json();
     const data = Array.isArray(json.data) ? json.data : [];
 
-    // Use fixed 'en-US' locale for server-side date formatting (client can reformat if needed)
-    const locale = 'en-US';
+    const locale = "en-US";
 
     return data
       .map((item: any) => ({
         id: item.id,
-        title: item.title || "Untitled",
-        excerpt: item.excerpt || "",
-        category: item.category || "hot",
-        topic: item.topic || "",
-        tags: item.tags || [],
-        image: item.image
-          ? `${STRAPI_URL}${item.image?.url || ""}`
+        title: item.attributes?.title || "Untitled",
+        excerpt: item.attributes?.excerpt || "",
+        category: item.attributes?.category || "hot",
+        topic: item.attributes?.topic || "",
+        tags: item.attributes?.tags?.data?.map((tag: any) => tag.attributes.name) || [],
+        image: item.attributes?.image?.data
+          ? `${STRAPI_URL}${item.attributes.image.data.attributes.url}`
           : "/placeholder.svg?height=600&width=800",
-        date: item.date
+        date: item.attributes?.date
           ? new Intl.DateTimeFormat(locale, {
               month: "short",
               day: "numeric",
               hour: "numeric",
               minute: "numeric",
               hour12: true,
-            }).format(new Date(item.date))
+            }).format(new Date(item.attributes.date))
           : "Just now",
-        author: item.author || "Anonymous",
-        readTime: item.readTime || "1 min",
-        slug: item.slug || "",
-        content: item.content || "",
+        author: item.attributes?.author || "Anonymous",
+        readTime: item.attributes?.readTime || "1 min",
+        slug: item.attributes?.slug || "",
+        content: item.attributes?.content || "",
       }))
-      .filter((article) => article.slug); // Lọc bỏ bài không có slug
+      .filter((article) => article.slug);
   } catch (error) {
     console.error("🔥 Error in getArticles:", error);
     return [];
@@ -83,6 +87,11 @@ export async function getArticleBySlug(slug: string): Promise<Article> {
   if (!slug) {
     throw new Error("Slug is required");
   }
+  if (!STRAPI_API_TOKEN) {
+    console.error("❌ STRAPI_API_TOKEN is not defined in .env");
+    throw new Error("STRAPI_API_TOKEN is required");
+  }
+
   try {
     const query = new URLSearchParams({
       "filters[slug][$eq]": slug,
@@ -90,9 +99,9 @@ export async function getArticleBySlug(slug: string): Promise<Article> {
     });
 
     const res = await fetch(`${STRAPI_URL}/api/articles?${query.toString()}`, {
-      headers: STRAPI_API_TOKEN
-        ? { Authorization: `Bearer ${STRAPI_API_TOKEN}` }
-        : {},
+      headers: {
+        Authorization: `Bearer ${STRAPI_API_TOKEN}`,
+      },
       next: { revalidate: 300 },
     });
 
@@ -108,32 +117,31 @@ export async function getArticleBySlug(slug: string): Promise<Article> {
     }
 
     const item = data[0];
-    // Use fixed 'en-US' locale for server-side date formatting
-    const locale = 'en-US';
+    const locale = "en-US";
 
     return {
       id: item.id,
-      title: item.title || "Untitled",
-      excerpt: item.excerpt || "",
-      category: item.category || "hot",
-      topic: item.topic || "",
-      tags: item.tags || [],
-      image: item.image
-        ? `${STRAPI_URL}${item.image?.url || ""}`
+      title: item.attributes?.title || "Untitled",
+      excerpt: item.attributes?.excerpt || "",
+      category: item.attributes?.category || "hot",
+      topic: item.attributes?.topic || "",
+      tags: item.attributes?.tags?.data?.map((tag: any) => tag.attributes.name) || [],
+      image: item.attributes?.image?.data
+        ? `${STRAPI_URL}${item.attributes.image.data.attributes.url}`
         : "/placeholder.svg?height=600&width=800",
-      date: item.date
+      date: item.attributes?.date
         ? new Intl.DateTimeFormat(locale, {
             month: "short",
             day: "numeric",
             hour: "numeric",
             minute: "numeric",
             hour12: true,
-          }).format(new Date(item.date))
+          }).format(new Date(item.attributes.date))
         : "Just now",
-      author: item.author || "Anonymous",
-      readTime: item.readTime || "1 min",
-      slug: item.slug || "",
-      content: item.content || "",
+      author: item.attributes?.author || "Anonymous",
+      readTime: item.attributes?.readTime || "1 min",
+      slug: item.attributes?.slug || "",
+      content: item.attributes?.content || "",
     };
   } catch (error) {
     console.error("🔥 Error in getArticleBySlug:", error);
