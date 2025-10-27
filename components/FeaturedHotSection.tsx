@@ -1,10 +1,10 @@
-// components/FeaturedHotSection.tsx (Fixed: Wrap Next/Image in motion.div for hover scale to resolve TypeScript src error)
+// components/FeaturedHotSection.tsx
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import Image from 'next/image';
+import Image from "next/image";
 import { Article } from "@/lib/api";
 
 interface Props {
@@ -35,8 +35,8 @@ export default function FeaturedHotSection({ articles }: Props) {
           transition={{ duration: 0.6 }}
           className="text-center mb-8"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">Stay Informed & Inspired</h2>
-          <p className="text-gray-600 text-lg">Hot Latest breaking news and trending stories</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">Stay Informed with Polyzone</h2>
+          <p className="text-gray-600 text-lg">Hot latest breaking news and trending stories from verified sources</p>
         </motion.div>
         <motion.div
           key={currentArticle.id}
@@ -45,17 +45,18 @@ export default function FeaturedHotSection({ articles }: Props) {
           transition={{ duration: 0.5 }}
           className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden shadow-2xl cursor-pointer group"
         >
-          <Link href={`/article/${currentArticle.slug}`}>
+          <Link href={`/article/${currentArticle.slug}`} target="_blank" rel="noopener noreferrer">
             <motion.div
               className="relative w-full h-full"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.4 }}
             >
               <Image
-                src={currentArticle.image || '/images/default-article.png'}
-                alt={currentArticle.title}
+                src={currentArticle.image || "/images/default-article.png"}
+                alt={`${currentArticle.title} - Polyzone`}
                 fill
                 className="object-cover"
+                loading="lazy"
               />
             </motion.div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
@@ -66,7 +67,7 @@ export default function FeaturedHotSection({ articles }: Props) {
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <span className="inline-block px-4 py-2 bg-red-500 text-white text-sm font-bold rounded-full mb-4">
-                  HOT NEWS
+                  HOT AGGREGATED NEWS
                 </span>
                 <h3 className="text-3xl md:text-4xl font-bold mb-3 line-clamp-2">{currentArticle.title}</h3>
                 <p className="text-gray-200 text-lg mb-4 line-clamp-2">{currentArticle.excerpt}</p>
@@ -75,6 +76,18 @@ export default function FeaturedHotSection({ articles }: Props) {
                   <span className="notranslate">{currentArticle.date}</span>
                   <span className="notranslate">{currentArticle.readTime}</span>
                 </div>
+                {currentArticle.tags && currentArticle.tags.length > 0 && (
+                  <div className="absolute bottom-4 right-4 flex gap-2">
+                    {currentArticle.tags.slice(0, 3).map((tag: string) => (
+                      <span
+                        key={tag}
+                        className="inline-block px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded-full"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             </div>
           </Link>

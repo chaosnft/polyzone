@@ -1,9 +1,8 @@
-// lib/api.ts
-const STRAPI_URL = process.env.STRAPI_URL || "https://worthy-candy-912dcff36f.strapiapp.com";
-const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN;
+const MICROCMS_URL = `https://${process.env.MICROCMS_SERVICE_ID}.microcms.io/api/v1/articles`;
+const MICROCMS_API_KEY = process.env.MICROCMS_API_KEY;
 
 export interface Article {
-  id: number;
+  id: string;
   title: string;
   excerpt: string | null;
   category: string;
@@ -15,28 +14,33 @@ export interface Article {
   slug: string;
   content?: string;
   tags?: string[];
+  source?: string; // Added for source citation
 }
 
 export async function getArticles(
-  params: { category?: string; topic?: string; limit?: number } = {}
+  params: { category?: string; topic?: string; limit?: number; offset?: number } = {}
 ): Promise<Article[]> {
-  if (!STRAPI_API_TOKEN) {
-    console.error("❌ STRAPI_API_TOKEN is not defined in .env");
-    throw new Error("STRAPI_API_TOKEN is required");
+  if (!MICROCMS_API_KEY || !process.env.MICROCMS_SERVICE_ID) {
+    console.error("❌ MICROCMS_API_KEY or SERVICE_ID is not defined in .env");
+    throw new Error("MICROCMS credentials required");
   }
 
   try {
     const query = new URLSearchParams({
-      populate: "*",
-      ...(params.category && { "filters[category][$eq]": params.category }),
-      ...(params.topic && { "filters[topic][$eq]": params.topic }),
-      "sort[0]": "date:desc",
-      "pagination[limit]": params.limit?.toString() || "20",
+      limit: params.limit?.toString() || "20",
+      offset: params.offset?.toString() || "0", // Added offset support
+      orders: "-date",
+      fields: "id,title,excerpt,category,topic,tags,image,date,author,readTime,slug,content,source", // Added source
     });
 
-    const res = await fetch(`${STRAPI_URL}/api/articles?${query.toString()}`, {
+    const filters: string[] = [];
+    if (params.category) filters.push(`category[contains]${params.category}`);
+    if (params.topic) filters.push(`topic[contains]${params.topic}`);
+    if (filters.length) query.append("filters", filters.join("[and]"));
+
+    const res = await fetch(`${MICROCMS_URL}?${query.toString()}`, {
       headers: {
-        Authorization: `Bearer ${STRAPI_API_TOKEN}`,
+        "X-MICROCMS-API-KEY": MICROCMS_API_KEY,
       },
       next: { revalidate: 60 },
     });
@@ -47,36 +51,32 @@ export async function getArticles(
     }
 
     const json = await res.json();
-    const data = Array.isArray(json.data) ? json.data : [];
+    const data = json.contents || [];
 
     const locale = "en-US";
-
-    return data
-      .map((item: any) => ({
-        id: item.id,
-        title: item.attributes?.title || "Untitled",
-        excerpt: item.attributes?.excerpt || "",
-        category: item.attributes?.category || "hot",
-        topic: item.attributes?.topic || "",
-        tags: item.attributes?.tags?.data?.map((tag: any) => tag.attributes.name) || [],
-        image: item.attributes?.image?.data
-          ? `${STRAPI_URL}${item.attributes.image.data.attributes.url}`
-          : "/placeholder.svg?height=600&width=800",
-        date: item.attributes?.date
-          ? new Intl.DateTimeFormat(locale, {
-              month: "short",
-              day: "numeric",
-              hour: "numeric",
-              minute: "numeric",
-              hour12: true,
-            }).format(new Date(item.attributes.date))
-          : "Just now",
-        author: item.attributes?.author || "Anonymous",
-        readTime: item.attributes?.readTime || "1 min",
-        slug: item.attributes?.slug || "",
-        content: item.attributes?.content || "",
-      }))
-      .filter((article) => article.slug);
+    return data.map((item: any) => ({
+      id: item.id,
+      title: item.title || "Untitled",
+      excerpt: item.excerpt || "",
+      category: Array.isArray(item.category) ? item.category[0] || "hot" : item.category || "hot",
+      topic: Array.isArray(item.topic) ? item.topic[0] || "" : item.topic || "",
+      tags: Array.isArray(item.tags) ? item.tags : [],
+      image: item.image?.url || "/images/default-article.png",
+      date: item.date
+        ? new Intl.DateTimeFormat(locale, {
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true,
+          }).format(new Date(item.date))
+        : "Just now",
+      author: item.author || "Anonymous",
+      readTime: item.readTime || "1 min",
+      slug: item.slug || "",
+      content: item.content || "",
+      source: item.source || "", // Added
+    }));
   } catch (error) {
     console.error("🔥 Error in getArticles:", error);
     return [];
@@ -87,20 +87,21 @@ export async function getArticleBySlug(slug: string): Promise<Article> {
   if (!slug) {
     throw new Error("Slug is required");
   }
-  if (!STRAPI_API_TOKEN) {
-    console.error("❌ STRAPI_API_TOKEN is not defined in .env");
-    throw new Error("STRAPI_API_TOKEN is required");
+  if (!MICROCMS_API_KEY || !process.env.MICROCMS_SERVICE_ID) {
+    console.error("❌ MICROCMS_API_KEY or SERVICE_ID is not defined in .env");
+    throw new Error("MICROCMS credentials required");
   }
 
   try {
     const query = new URLSearchParams({
-      "filters[slug][$eq]": slug,
-      populate: "*",
+      filters: `slug[equals]${slug}`,
+      limit: "1",
+      fields: "id,title,excerpt,category,topic,tags,image,date,author,readTime,slug,content,source", // Added source
     });
 
-    const res = await fetch(`${STRAPI_URL}/api/articles?${query.toString()}`, {
+    const res = await fetch(`${MICROCMS_URL}?${query.toString()}`, {
       headers: {
-        Authorization: `Bearer ${STRAPI_API_TOKEN}`,
+        "X-MICROCMS-API-KEY": MICROCMS_API_KEY,
       },
       next: { revalidate: 300 },
     });
@@ -110,38 +111,35 @@ export async function getArticleBySlug(slug: string): Promise<Article> {
     }
 
     const json = await res.json();
-    const data = Array.isArray(json.data) ? json.data : [];
-
+    const data = json.contents || [];
     if (!data.length) {
       throw new Error("Article not found");
     }
 
     const item = data[0];
     const locale = "en-US";
-
     return {
       id: item.id,
-      title: item.attributes?.title || "Untitled",
-      excerpt: item.attributes?.excerpt || "",
-      category: item.attributes?.category || "hot",
-      topic: item.attributes?.topic || "",
-      tags: item.attributes?.tags?.data?.map((tag: any) => tag.attributes.name) || [],
-      image: item.attributes?.image?.data
-        ? `${STRAPI_URL}${item.attributes.image.data.attributes.url}`
-        : "/placeholder.svg?height=600&width=800",
-      date: item.attributes?.date
+      title: item.title || "Untitled",
+      excerpt: item.excerpt || "",
+      category: Array.isArray(item.category) ? item.category[0] || "hot" : item.category || "hot",
+      topic: Array.isArray(item.topic) ? item.topic[0] || "" : item.topic || "",
+      tags: Array.isArray(item.tags) ? item.tags : [],
+      image: item.image?.url || "/images/default-article.png",
+      date: item.date
         ? new Intl.DateTimeFormat(locale, {
             month: "short",
             day: "numeric",
             hour: "numeric",
             minute: "numeric",
             hour12: true,
-          }).format(new Date(item.attributes.date))
+          }).format(new Date(item.date))
         : "Just now",
-      author: item.attributes?.author || "Anonymous",
-      readTime: item.attributes?.readTime || "1 min",
-      slug: item.attributes?.slug || "",
-      content: item.attributes?.content || "",
+      author: item.author || "Anonymous",
+      readTime: item.readTime || "1 min",
+      slug: item.slug || "",
+      content: item.content || "",
+      source: item.source || "", // Added
     };
   } catch (error) {
     console.error("🔥 Error in getArticleBySlug:", error);

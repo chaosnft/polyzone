@@ -1,11 +1,11 @@
-// components/Header.tsx (Updated: Added click outside to close language dropdown; improved dropdown styling with better shadows, borders, and hover effects)
+// components/Header.tsx
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useRouter, usePathname } from 'next/navigation';
-import Cookies from 'js-cookie';
-import Image from 'next/image';
+import { useRouter, usePathname } from "next/navigation";
+import Cookies from "js-cookie";
+import Image from "next/image";
 
 const COOKIE_NAME = "googtrans";
 
@@ -13,7 +13,7 @@ interface Props {
   locale?: string;
 }
 
-export default function Header({ locale: initialLocale = 'en' }: Props) {
+export default function Header({ locale: initialLocale = "en" }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,19 +23,17 @@ export default function Header({ locale: initialLocale = 'en' }: Props) {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const languages = [
-    { code: 'en', name: 'English' },
-    { code: 'fr', name: 'Français' },
-    { code: 'zh', name: '中文' },
-    { code: 'vi', name: 'Tiếng Việt' },
-    { code: 'ja', name: '日本語' },
-    { code: 'ko', name: '한국어' },
-    { code: 'ru', name: 'Русский' },
+    { code: "en", name: "English" },
+    { code: "fr", name: "Français" },
+    { code: "ja", name: "日本語" },
+    { code: "ko", name: "한국어" },
+    // Removed 'vi' (Tiếng Việt) and 'zh' (中文) to align with restricted countries
   ];
 
   // Monitor widget readiness and current language from select
   useEffect(() => {
     const checkWidget = () => {
-      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+      const select = document.querySelector(".goog-te-combo") as HTMLSelectElement;
       if (select) {
         setWidgetReady(true);
         if (select.value !== currentLocale) {
@@ -66,14 +64,12 @@ export default function Header({ locale: initialLocale = 'en' }: Props) {
 
   // Switch language: prefer in-place if widget ready, else fallback to reload
   const switchLanguage = (newLocale: string) => {
-    const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+    const select = document.querySelector(".goog-te-combo") as HTMLSelectElement;
     if (select && widgetReady) {
-      // In-place translation without reload
       select.value = newLocale;
-      select.dispatchEvent(new Event('change', { bubbles: true }));
+      select.dispatchEvent(new Event("change", { bubbles: true }));
       setCurrentLocale(newLocale);
     } else {
-      // Fallback: set cookie and reload
       Cookies.set(COOKIE_NAME, `/auto/${newLocale}`);
       window.location.reload();
     }
@@ -89,18 +85,28 @@ export default function Header({ locale: initialLocale = 'en' }: Props) {
     };
 
     if (isLangOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isLangOpen]);
 
+  const navItems = [
+    { label: "Home", href: "/" },
+    { label: "War Zone", href: "#war-zone" },
+    { label: "US", href: "#us" },
+    { label: "Asia", href: "#asia" },
+    { label: "EU", href: "#eu" },
+    { label: "Finance", href: "#finance" },
+    { label: "Cryptocurrency", href: "#cryptocurrency" },
+  ];
+
   return (
-    <motion.header 
-      initial={{ y: -100 }} 
-      animate={{ y: 0 }} 
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
       className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-gray-200"
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -110,30 +116,26 @@ export default function Header({ locale: initialLocale = 'en' }: Props) {
           transition={{ duration: 0.6 }}
           className="flex items-center gap-2"
         >
-          <Image 
-            src="/logo-black.webp" 
-            alt="NewsHub Logo" 
-            width={120} 
-            height={40} 
+          <Image
+            src="/logo-black.webp"
+            alt="Polyzone Logo"
+            width={120}
+            height={40}
             className="object-contain"
-            priority 
+            priority
           />
-          <span className="text-xl font-bold text-gray-900 hidden sm:inline sr-only">NewsHub</span>
+          <span className="text-xl font-bold text-gray-900 hidden sm:inline sr-only">Polyzone</span>
         </motion.div>
 
         <nav className="hidden md:flex items-center gap-8">
-          {[
-            { label: 'Hot', href: "#hot" },
-            { label: 'Featured', href: "#featured" },
-            { label: 'About', href: "#about" },
-          ].map((item, index) => (
+          {navItems.map((item, index) => (
             <motion.a
               key={item.label}
               href={item.href}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="text-gray-700 font-medium hover:text-red-500 transition-colors duration-300 relative group"
+              className="text-gray-700 font-medium hover:text-red-500 transition-colors duration-300 relative group notranslate"
             >
               {item.label}
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300" />
@@ -143,7 +145,7 @@ export default function Header({ locale: initialLocale = 'en' }: Props) {
 
         {/* Right-aligned group: Subscribe and Language */}
         <div className="hidden md:flex items-center gap-4">
-          <motion.button
+          {/* <motion.button
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
@@ -152,21 +154,28 @@ export default function Header({ locale: initialLocale = 'en' }: Props) {
             className="px-6 py-2 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             Subscribe
-          </motion.button>
+          </motion.button> */}
 
           {/* Language Toggle */}
           <div className="relative" ref={dropdownRef}>
-            <button 
+            <button
               onClick={() => setIsLangOpen(!isLangOpen)}
               className="flex items-center gap-1 px-3 py-1 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors border border-gray-300"
             >
-              <span className="text-sm font-medium">{languages.find(l => l.code === currentLocale)?.name || 'English'}</span>
-              <svg className={`w-4 h-4 transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span className="text-sm font-medium">
+                {languages.find((l) => l.code === currentLocale)?.name || "English"}
+              </span>
+              <svg
+                className={`w-4 h-4 transition-transform duration-300 ${isLangOpen ? "rotate-180" : ""}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
             {isLangOpen && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -179,9 +188,9 @@ export default function Header({ locale: initialLocale = 'en' }: Props) {
                     onClick={() => switchLanguage(lang.code)}
                     whileHover={{ x: 2 }}
                     className={`block px-4 py-3 text-sm w-full text-left font-medium transition-all duration-200 ${
-                      currentLocale === lang.code 
-                        ? 'bg-red-50 text-red-700 border-l-4 border-red-500' 
-                        : 'text-gray-700 hover:bg-gray-100'
+                      currentLocale === lang.code
+                        ? "bg-red-50 text-red-700 border-l-4 border-red-500"
+                        : "text-gray-700 hover:bg-gray-100"
                     }`}
                   >
                     {lang.name}
@@ -216,15 +225,11 @@ export default function Header({ locale: initialLocale = 'en' }: Props) {
         className="md:hidden bg-white border-t border-gray-200 overflow-hidden"
       >
         <div className="px-6 py-4 space-y-3">
-          {[
-            { label: 'Hot', href: "#hot" },
-            { label: 'Featured', href: "#featured" },
-            { label: 'About', href: "#about" },
-          ].map((item) => (
+          {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              className="block text-gray-700 font-medium hover:text-red-500 transition-colors duration-300"
+              className="block text-gray-700 font-medium hover:text-red-500 transition-colors duration-300 notranslate"
               onClick={() => setIsMenuOpen(false)}
             >
               {item.label}
@@ -252,7 +257,9 @@ export default function Header({ locale: initialLocale = 'en' }: Props) {
                   switchLanguage(lang.code);
                   setIsMenuOpen(false);
                 }}
-                className={`block w-full text-left px-2 py-1 text-sm hover:bg-gray-100 rounded ${currentLocale === lang.code ? 'bg-red-100' : ''}`}
+                className={`block w-full text-left px-2 py-1 text-sm hover:bg-gray-100 rounded ${
+                  currentLocale === lang.code ? "bg-red-100" : ""
+                }`}
               >
                 {lang.name}
               </button>

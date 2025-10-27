@@ -18,8 +18,8 @@ export default async function Home() {
       <Header />
       <FeaturedHotSection articles={articles} />
       <FeaturedNewsSection articles={articles} />
-      <AboutSection />
       <TopicFilterSection articles={articles} />
+      <AboutSection />
       <EmailSubscriptionSection />
       <Footer />
     </div>
