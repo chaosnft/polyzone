@@ -2,21 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 
 const RESTRICTED_COUNTRIES = ["VN", "KP", "RU", "IR", "SY", "CU", "VE", "BY"];
 
-export async function middleware(request: NextRequest) {
+// Global cache (memory-based)
+const cache = new Map<string, { country: string; expires: number }>();
+const CACHE_TTL = 30 * 60 * 1000; // 30 phút
+
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Skip cho static files, API, hoặc admin
   if (pathname.startsWith("/_next/") || pathname.startsWith("/api/") || pathname === "/admin") {
     return NextResponse.next();
   }
 
-  // Lấy IP
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0] ?? request.ip ?? "unknown";
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? request.ip ?? "unknown";
   if (ip === "unknown") return NextResponse.next();
-
-  // Cache đơn giản cho dev (memory-based, reset khi restart server)
-  const cache = new Map<string, { country: string; expires: number }>();
-  const CACHE_TTL = 30 * 60 * 1000; // 5 phút
 
   const cached = cache.get(ip);
   if (cached && Date.now() < cached.expires) {
@@ -30,29 +28,34 @@ export async function middleware(request: NextRequest) {
   }
 
   try {
-    // Fetch geolocation
-    const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
+    const geoRes = await fetch(`https://ipapi.co/${ip}/json/`, {
+      headers: { "User-Agent": "Polyzone-Geoblock/1.0" },
+    });
+
     if (!geoRes.ok) {
-      // Nếu HTTP error, fallback allow
-      console.warn(`Geolocation HTTP error for IP ${ip}: ${geoRes.status}`);
+      if (process.env.NODE_ENV === "development") {
+        console.warn(`Geolocation HTTP error for IP ${ip}: ${geoRes.status}`);
+      }
       return NextResponse.next();
     }
 
-    // Đọc as text trước để tránh parse error
     const geoText = await geoRes.text();
     let geoData: any;
 
     try {
       geoData = JSON.parse(geoText);
     } catch (parseError) {
-      // Nếu không parse được (rate limit: "Too many requests"), fallback allow
-      console.warn(`Geolocation parse error for IP ${ip}: ${parseError.message}. Likely rate limit.`);
+      if (process.env.NODE_ENV === "development") {
+        console.warn(`Geolocation parse error for IP ${ip}: ${parseError.message}. Likely rate limit.`);
+      }
       return NextResponse.next();
     }
 
     const countryCode = geoData.country_code || geoData.country;
+    if (!countryCode) {
+      return NextResponse.next();
+    }
 
-    // Cache kết quả
     cache.set(ip, { country: countryCode, expires: Date.now() + CACHE_TTL });
 
     if (RESTRICTED_COUNTRIES.includes(countryCode)) {
@@ -61,8 +64,9 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(url);
     }
   } catch (error) {
-    // Bất kỳ lỗi nào khác (network, etc.), fallback allow
-    console.warn(`Geolocation fallback for IP ${ip}: ${error.message}`);
+    if (process.env.NODE_ENV === "development") {
+      console.warn(`Geolocation fallback for IP ${ip}: ${error.message}`);
+    }
   }
 
   return NextResponse.next();
