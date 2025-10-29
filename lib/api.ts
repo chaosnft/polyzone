@@ -1,3 +1,4 @@
+// lib/api.ts
 const MICROCMS_URL = `https://${process.env.MICROCMS_SERVICE_ID}.microcms.io/api/v1/articles`;
 const MICROCMS_API_KEY = process.env.MICROCMS_API_KEY;
 
@@ -14,7 +15,7 @@ export interface Article {
   slug: string;
   content?: string;
   tags?: string[];
-  source?: string; // Added for source citation
+  // source?: string;
 }
 
 export async function getArticles(
@@ -30,7 +31,7 @@ export async function getArticles(
       limit: params.limit?.toString() || "20",
       offset: params.offset?.toString() || "0", // Added offset support
       orders: "-date",
-      fields: "id,title,excerpt,category,topic,tags,image,date,author,readTime,slug,content,source", // Added source
+      fields: "id,title,excerpt,category,topic,tags,image,date,author,readTime,slug,content",
     });
 
     const filters: string[] = [];
@@ -75,7 +76,7 @@ export async function getArticles(
       readTime: item.readTime || "1 min",
       slug: item.slug || "",
       content: item.content || "",
-      source: item.source || "", // Added
+      // source: item.source || "", 
     }));
   } catch (error) {
     console.error("🔥 Error in getArticles:", error);
@@ -96,7 +97,7 @@ export async function getArticleBySlug(slug: string): Promise<Article> {
     const query = new URLSearchParams({
       filters: `slug[equals]${slug}`,
       limit: "1",
-      fields: "id,title,excerpt,category,topic,tags,image,date,author,readTime,slug,content,source", // Added source
+      fields: "id,title,excerpt,category,topic,tags,image,date,author,readTime,slug,content",
     });
 
     const res = await fetch(`${MICROCMS_URL}?${query.toString()}`, {
@@ -139,7 +140,7 @@ export async function getArticleBySlug(slug: string): Promise<Article> {
       readTime: item.readTime || "1 min",
       slug: item.slug || "",
       content: item.content || "",
-      source: item.source || "", // Added
+      // source: item.source || "", 
     };
   } catch (error) {
     console.error("🔥 Error in getArticleBySlug:", error);

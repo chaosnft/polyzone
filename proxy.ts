@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const RESTRICTED_COUNTRIES = ["VN", "KP", "RU", "IR", "SY", "CU", "VE", "BY"];
+const RESTRICTED_COUNTRIES = ["KP", "RU", "IR", "SY", "CU", "VE", "BY"];
 
 // Global cache (memory-based)
 const cache = new Map<string, { country: string; expires: number }>();

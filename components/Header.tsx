@@ -24,10 +24,11 @@ export default function Header({ locale: initialLocale = "en" }: Props) {
 
   const languages = [
     { code: "en", name: "English" },
+    { code: "vi", name: "Tiếng Việt" },
+    { code: "zh", name: "中文" },
     { code: "fr", name: "Français" },
     { code: "ja", name: "日本語" },
     { code: "ko", name: "한국어" },
-    // Removed 'vi' (Tiếng Việt) and 'zh' (中文) to align with restricted countries
   ];
 
   // Monitor widget readiness and current language from select
@@ -95,12 +96,17 @@ export default function Header({ locale: initialLocale = "en" }: Props) {
 
   const navItems = [
     { label: "Home", href: "/" },
-    { label: "War Zone", href: "#war-zone" },
-    { label: "US", href: "#us" },
-    { label: "Asia", href: "#asia" },
-    { label: "EU", href: "#eu" },
-    { label: "Finance", href: "#finance" },
-    { label: "Cryptocurrency", href: "#cryptocurrency" },
+    { label: "Bitcoin", href: "#bitcoin" },
+    { label: "Ethereum", href: "#ethereum" },
+    { label: "Solana", href: "#solana" },
+    { label: "ETF", href: "#etf" },
+    { label: "Binance", href: "#binance" },
+    { label: "Coinbase", href: "#coinbase" },
+    { label: "SEC", href: "#sec" },
+    { label: "China", href: "#china" },
+    { label: "Korea", href: "#korea" },
+    { label: "Japan", href: "#japan" },
+    { label: "Fed", href: "#fed" },
   ];
 
   return (
@@ -118,16 +124,16 @@ export default function Header({ locale: initialLocale = "en" }: Props) {
         >
           <Image
             src="/logo-black.webp"
-            alt="Polyzone Logo"
+            alt="Coinzone Logo"
             width={120}
             height={40}
             className="object-contain"
             priority
           />
-          <span className="text-xl font-bold text-gray-900 hidden sm:inline sr-only">Polyzone</span>
+          <span className="text-xl font-bold text-gray-900 hidden sm:inline sr-only">Coinzone</span>
         </motion.div>
 
-        <nav className="hidden md:flex items-center gap-8">
+        {/* <nav className="hidden md:flex items-center gap-8">
           {navItems.map((item, index) => (
             <motion.a
               key={item.label}
@@ -141,7 +147,7 @@ export default function Header({ locale: initialLocale = "en" }: Props) {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300" />
             </motion.a>
           ))}
-        </nav>
+        </nav> */}
 
         {/* Right-aligned group: Subscribe and Language */}
         <div className="hidden md:flex items-center gap-4">

@@ -24,7 +24,7 @@ export default function Sidebar({ initialArticles }: Props) {
 
   return (
     <aside className="w-full lg:w-1/3 lg:ml-8 space-y-6 overflow-y-auto max-h-screen">
-      <h3 className="text-xl font-bold text-gray-900 mb-4 sticky top-0 bg-white pt-4">Featured News</h3>
+      <h3 className="text-xl font-bold text-gray-900 mb-4 sticky top-0 bg-white pt-4">Latest Crypto News</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {articles.map((article: Article) => (
           <Link

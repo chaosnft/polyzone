@@ -12,30 +12,30 @@ const _geistMono = V0_Font_Geist_Mono({ subsets: ['latin'], weight: ["100","200"
 const _sourceSerif_4 = V0_Font_Source_Serif_4({ subsets: ['latin'], weight: ["200","300","400","500","600","700","800","900"] });
 
 export const metadata: Metadata = {
-  title: 'Polyzone - Breaking News & Insights',
-  description: 'Stay informed with the latest breaking news, in-depth analysis, and trending stories across technology, business, and more.',
+  title: 'Coinzone - Crypto News & Blockchain Insights',
+  description: 'Stay updated with the latest cryptocurrency news, blockchain developments, DeFi, NFTs, market analysis, and regulatory updates.',
   generator: 'Next.js + Strapi',
-  keywords: 'news, technology, business, environment, sports, breaking news, insights',
-  authors: [{ name: 'NewsHub Team' }],
-  creator: 'NewsHub',
-  publisher: 'NewsHub',
+  keywords: 'crypto, bitcoin, ethereum, blockchain, defi, nft, solana, etf, binance, coinbase, sec, news, insights',
+  authors: [{ name: 'Coinzone Team' }],
+  creator: 'Coinzone',
+  publisher: 'Coinzone',
   formatDetection: { email: false, address: false, telephone: false },
   metadataBase: new URL('https://yourdomain.com'), // Thay bằng domain thật
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: 'NewsHub',
-    description: 'Your source for breaking news and in-depth analysis.',
+    title: 'Coinzone',
+    description: 'Your source for crypto news, blockchain insights, and market trends.',
     images: '/og-image.png',
     locale: 'en_US',
     type: 'website',
-    siteName: 'NewsHub',
+    siteName: 'Coinzone',
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@newshub',
-    creator: '@newshub',
+    site: '@coinzone',
+    creator: '@coinzone',
   },
   robots: {
     index: true,

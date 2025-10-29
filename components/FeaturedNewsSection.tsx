@@ -51,8 +51,8 @@ export default function FeaturedNewsSection({ articles: initialArticles }: Props
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-2">Featured News</h2>
-          <p className="text-gray-600">Curated stories and in-depth coverage from verified sources</p>
+          <h2 className="text-4xl font-bold text-gray-900 mb-2">Featured Crypto News</h2>
+          <p className="text-gray-600">Curated blockchain stories, market analysis, and regulatory updates from verified sources</p>
         </motion.div>
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
           {mainArticle && (
@@ -71,7 +71,7 @@ export default function FeaturedNewsSection({ articles: initialArticles }: Props
                   >
                     <Image
                       src={mainArticle.image || "/images/default-article.png"}
-                      alt={`${mainArticle.title} - Polyzone`}
+                      alt={`${mainArticle.title} - Coinzone`}
                       fill
                       className="object-cover"
                       loading="lazy"
@@ -80,7 +80,7 @@ export default function FeaturedNewsSection({ articles: initialArticles }: Props
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                     <span className="inline-block px-3 py-1 bg-red-500 text-white text-xs font-bold rounded-full mb-3">
-                      FEATURED
+                      FEATURED CRYPTO
                     </span>
                     <h3 className="text-2xl font-bold mb-2 line-clamp-2">{mainArticle.title}</h3>
                     <p className="text-gray-200 text-sm line-clamp-2 mb-3">{mainArticle.excerpt}</p>
@@ -121,7 +121,7 @@ export default function FeaturedNewsSection({ articles: initialArticles }: Props
                   >
                     <Image
                       src={article.image || "/images/default-article.png"}
-                      alt={`${article.title} - Polyzone`}
+                      alt={`${article.title} - Coinzone`}
                       fill
                       className="object-cover"
                       loading="lazy"

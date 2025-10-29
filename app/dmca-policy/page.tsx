@@ -3,8 +3,8 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 export const metadata = {
-  title: "DMCA Policy | Polyzone",
-  description: "Our DMCA takedown policy for aggregated content by Polyzone.",
+  title: "DMCA Policy | Coinzone",
+  description: "Our DMCA takedown policy for aggregated crypto and blockchain content by Coinzone.",
 };
 
 export default function DMCA() {
@@ -21,13 +21,13 @@ export default function DMCA() {
         <article className="prose prose-lg max-w-none">
           <h1 className="text-4xl font-bold text-gray-900 mb-6">DMCA Policy</h1>
           <p className="text-gray-600 mb-6">
-            Effective Date: October 27, 2025. Last Updated: October 27, 2025.
+            Effective Date: October 29, 2025. Last Updated: October 29, 2025.
           </p>
           <section className="mb-8">
             <h2 className="text-2xl font-bold mb-4">Introduction</h2>
             <p className="text-gray-700">
-              Polyzone respects intellectual property rights and complies with the Digital Millennium Copyright Act (DMCA).
-              As an aggregator, we link to or excerpt content from verified sources but do not host original content.
+              Coinzone respects intellectual property rights and complies with the Digital Millennium Copyright Act (DMCA).
+              As a crypto and blockchain aggregator, we link to or excerpt content from verified sources but do not host original content.
             </p>
           </section>
           <section className="mb-8">
@@ -62,13 +62,13 @@ export default function DMCA() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold mb-4">Designated DMCA Agent</h2>
             <p className="text-gray-700">
-              DMCA Agent: Polyzone, Email: [your-email@example.com], Address: [Your Address].
+              DMCA Agent: Coinzone, Email: [your-email@example.com], Address: [Your Address].
             </p>
           </section>
           <section className="mb-8">
             <h2 className="text-2xl font-bold mb-4">Disclaimer</h2>
             <p className="text-gray-700">
-              All content is aggregated from third-party sources. We encourage reporting to original publishers.
+              All content is aggregated from third-party crypto and blockchain sources. We encourage reporting to original publishers.
             </p>
           </section>
           <section>

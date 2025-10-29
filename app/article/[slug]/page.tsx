@@ -19,15 +19,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   try {
     const article = await getArticleBySlug(resolvedParams.slug);
     return {
-      title: `${article.title} | Polyzone`,
-      description: `${article.excerpt} - Aggregated from verified sources by Polyzone.`,
-      keywords: `${article.topic}, ${article.category}, news, ${article.tags?.join(", ") || ""}`,
+      title: `${article.title} | Coinzone`,
+      description: `${article.excerpt} - Aggregated from verified crypto and blockchain sources by Coinzone.`,
+      keywords: `${article.topic}, ${article.category}, crypto, blockchain, news, ${article.tags?.join(", ") || ""}`,
       authors: [{ name: article.author }],
-      creator: "Polyzone",
-      publisher: "Polyzone",
+      creator: "Coinzone",
+      publisher: "Coinzone",
       openGraph: {
         title: article.title,
-        description: `${article.excerpt} - Aggregated content for community use by Polyzone.`,
+        description: `${article.excerpt} - Aggregated crypto and blockchain content for community use by Coinzone.`,
         images: [article.image],
         type: "article",
         publishedTime: article.date,
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   } catch {
     return {
-      title: "Article Not Found | Polyzone",
+      title: "Article Not Found | Coinzone",
       robots: "noindex",
     };
   }
@@ -73,10 +73,10 @@ export default async function ArticlePage({ params }: Props) {
     "author": { "@type": "Person", "name": article.author },
     "publisher": {
       "@type": "Organization",
-      "name": "Polyzone",
+      "name": "Coinzone",
       "logo": { "@type": "ImageObject", "url": "/logo.webp" },
     },
-    "description": `${article.excerpt} - This is aggregated content from verified sources for community purposes by Polyzone.`,
+    "description": `${article.excerpt} - This is aggregated crypto and blockchain content from verified sources for community purposes by Coinzone.`,
   };
 
   return (
@@ -144,17 +144,17 @@ export default async function ArticlePage({ params }: Props) {
           />
           <div className="mt-8 p-4 bg-gray-100 rounded-lg text-sm text-gray-600">
             <p>
-              Disclaimer: This content is aggregated from verified external sources for community information purposes
+              Disclaimer: This content is aggregated from verified external sources for crypto and blockchain community information purposes
               only.
             </p>
-            {article.source && (
+            {/* {article.source && (
               <p>
                 Source:{" "}
                 <a href={article.source} target="_blank" rel="noopener noreferrer" className="text-red-500">
                   {article.source}
                 </a>
               </p>
-            )}
+            )} */}
           </div>
         </article>
 

@@ -6,7 +6,7 @@ export default function GoogleTranslateScript() {
   return (
     <GoogleTranslate
       pageLanguage="en"
-      includedLanguages="en,vi,fr,zh,ja,ko,ru"
+      includedLanguages="en,vi,zh,fr,ja,ko,ru"
       translateLayout="simple" // Or 'dropdown' for more options
       googleTranslateUrl="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit2"
     />

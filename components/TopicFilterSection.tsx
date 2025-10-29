@@ -12,7 +12,7 @@ interface Props {
   articles: Article[];
 }
 
-const TOPICS = ["ALL", "War Zone", "US", "Asia", "EU", "Finance", "Cryptocurrency"];
+const TOPICS = ["ALL", "Bitcoin", "Ethereum", "Solana", "ETF", "Binance", "Coinbase", "SEC","US" , "China", "Korea", "Japan", "Fed"];
 
 export default function TopicFilterSection({ articles: initialArticles }: Props) {
   const [selectedTopic, setSelectedTopic] = useState("ALL");
@@ -51,8 +51,8 @@ export default function TopicFilterSection({ articles: initialArticles }: Props)
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-2">Explore Topics</h2>
-          <p className="text-gray-600">Discover stories in your favorite categories from verified sources</p>
+          <h2 className="text-4xl font-bold text-gray-900 mb-2">Explore Crypto Topics</h2>
+          <p className="text-gray-600">Discover blockchain stories, market trends, and regulatory news in your favorite crypto categories from verified sources</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -100,7 +100,7 @@ export default function TopicFilterSection({ articles: initialArticles }: Props)
                       >
                         <Image
                           src={mainArticle.image || "/images/default-article.png"}
-                          alt={`${mainArticle.title} - Polyzone`}
+                          alt={`${mainArticle.title} - Coinzone`}
                           fill
                           className="object-cover"
                           loading="lazy"
@@ -150,7 +150,7 @@ export default function TopicFilterSection({ articles: initialArticles }: Props)
                       >
                         <Image
                           src={article.image || "/images/default-article.png"}
-                          alt={`${article.title} - Polyzone`}
+                          alt={`${article.title} - Coinzone`}
                           fill
                           className="object-cover"
                           loading="lazy"
@@ -209,7 +209,7 @@ export default function TopicFilterSection({ articles: initialArticles }: Props)
           </>
         ) : (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-12">
-            <p className="text-gray-600 text-lg">No articles found in this topic.</p>
+            <p className="text-gray-600 text-lg">No articles found in this crypto topic.</p>
           </motion.div>
         )}
       </div>

@@ -19,17 +19,16 @@ export default function Footer() {
             <div className="flex items-center gap-2 mb-3 justify-center lg:justify-start">
               <Image
                 src="/logo-white.webp"
-                alt="Polyzone Logo"
+                alt="Coinzone Logo"
                 width={120}
                 height={40}
                 className="object-contain"
                 priority
               />
-              <span className="text-xl font-bold sr-only">Polyzone</span>
+              <span className="text-xl font-bold sr-only">Coinzone</span>
             </div>
             <p className="text-gray-400 text-sm max-w-md mx-auto lg:mx-0">
-              Polyzone aggregates breaking news and in-depth analysis from verified sources for informed communities.
-              Compliant with DMCA and GDPR.
+              Coinzone aggregates crypto breaking news, blockchain insights, and market analysis from verified sources for informed crypto communities.
             </p>
           </motion.div>
           {/* Follow Us - Center */}
@@ -86,18 +85,18 @@ export default function Footer() {
             >
               Privacy Policy
             </Link>
-            <Link
+            {/* <Link
               href="/dmca-policy"
               className="text-gray-400 text-sm hover:text-red-500 transition-colors duration-300 block"
             >
               DMCA Policy
-            </Link>
+            </Link> */}
           </motion.div>
         </div>
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400 text-sm">
-            © 2025 Polyzone. All rights reserved. Content aggregated from verified sources.
+            © 2025 Coinzone. All rights reserved. Crypto and blockchain content aggregated from verified sources.
           </p>
         </div>
       </div>
