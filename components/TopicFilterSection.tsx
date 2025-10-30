@@ -2,7 +2,7 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Tag } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Article } from "@/lib/api";
@@ -122,8 +122,9 @@ export default function TopicFilterSection({ articles: initialArticles }: Props)
                             {mainArticle.tags.slice(0, 3).map((tag: string) => (
                               <span
                                 key={tag}
-                                className="inline-block px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded-full"
+                                className="inline-flex items-center px-2 py-0.5 bg-gray-200 text-gray-700 text-xs font-semibold rounded-full gap-1 notranslate"
                               >
+                                <Tag className="w-3 h-3 flex-shrink-0" />
                                 {tag}
                               </span>
                             ))}
@@ -161,13 +162,14 @@ export default function TopicFilterSection({ articles: initialArticles }: Props)
                         <h4 className="text-sm font-bold line-clamp-2 mb-1">{article.title}</h4>
                         <p className="text-xs text-gray-300 notranslate">{article.date}</p>
                         {article.tags && article.tags.length > 0 && (
-                          <div className="absolute bottom-4 right-4 flex gap-2">
+                          <div className="absolute bottom-2 right-2 flex gap-1">
                             {article.tags.slice(0, 3).map((tag: string) => (
                               <span
                                 key={tag}
-                                className="inline-block px-2 py-0.5 bg-red-500 text-white text-xs font-semibold rounded-full"
+                                className="inline-flex items-center px-1 py-0.25 bg-gray-200 text-gray-700 text-[9px] font-semibold rounded-full gap-0.5 notranslate"
                               >
-                                {tag}
+                                <Tag className="w-2 h-2 flex-shrink-0" />
+                                <span className="truncate max-w-[50px]">{tag}</span>
                               </span>
                             ))}
                           </div>

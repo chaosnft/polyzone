@@ -2,7 +2,7 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Tag } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Article } from "@/lib/api";
@@ -93,8 +93,9 @@ export default function FeaturedNewsSection({ articles: initialArticles }: Props
                         {mainArticle.tags.slice(0, 3).map((tag: string) => (
                           <span
                             key={tag}
-                            className="inline-block px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded-full"
+                            className="inline-flex items-center px-2 py-0.5 bg-gray-200 text-gray-700 text-xs font-semibold rounded-full gap-1 notranslate"
                           >
+                            <Tag className="w-3 h-3 flex-shrink-0" />
                             {tag}
                           </span>
                         ))}
@@ -136,8 +137,9 @@ export default function FeaturedNewsSection({ articles: initialArticles }: Props
                         {article.tags.slice(0, 3).map((tag: string) => (
                           <span
                             key={tag}
-                            className="inline-block px-2 py-0.5 bg-red-500 text-white text-xs font-semibold rounded-full"
+                            className="inline-flex items-center px-2 py-0.5 bg-gray-200 text-gray-700 text-xs font-semibold rounded-full gap-1 notranslate"
                           >
+                            <Tag className="w-3 h-3 flex-shrink-0" />
                             {tag}
                           </span>
                         ))}

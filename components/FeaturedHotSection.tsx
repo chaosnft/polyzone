@@ -2,7 +2,7 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Tag } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Article } from "@/lib/api";
@@ -66,9 +66,6 @@ export default function FeaturedHotSection({ articles }: Props) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <span className="inline-block px-4 py-2 bg-red-500 text-white text-sm font-bold rounded-full mb-4">
-                  HOT CRYPTO AGGREGATED NEWS
-                </span>
                 <h3 className="text-3xl md:text-4xl font-bold mb-3 line-clamp-2">{currentArticle.title}</h3>
                 <p className="text-gray-200 text-lg mb-4 line-clamp-2">{currentArticle.excerpt}</p>
                 <div className="flex items-center gap-6 text-sm">
@@ -76,21 +73,25 @@ export default function FeaturedHotSection({ articles }: Props) {
                   <span className="notranslate">{currentArticle.date}</span>
                   <span className="notranslate">{currentArticle.readTime}</span>
                 </div>
-                {currentArticle.tags && currentArticle.tags.length > 0 && (
-                  <div className="absolute bottom-4 right-4 flex gap-2">
-                    {currentArticle.tags.slice(0, 3).map((tag: string) => (
-                      <span
-                        key={tag}
-                        className="inline-block px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded-full"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
               </motion.div>
             </div>
           </Link>
+          <span className="absolute top-8 left-8 inline-block px-4 py-2 bg-red-500 text-white text-sm font-bold rounded-full z-10">
+            HOT CRYPTO AGGREGATED NEWS
+          </span>
+          {currentArticle.tags && currentArticle.tags.length > 0 && (
+            <div className="absolute bottom-4 right-4 flex gap-2 z-10">
+              {currentArticle.tags.slice(0, 3).map((tag: string) => (
+                <span
+                  key={tag}
+                  className="inline-flex items-center px-2 py-0.5 bg-gray-200 text-gray-700 text-xs font-semibold rounded-full gap-1 notranslate"
+                >
+                  <Tag className="w-3 h-3 flex-shrink-0" />
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </motion.div>
         <div className="flex justify-center gap-4 mt-8">
           <motion.button

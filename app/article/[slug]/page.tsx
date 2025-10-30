@@ -139,7 +139,7 @@ export default async function ArticlePage({ params }: Props) {
           </header>
 
           <div
-            className="prose prose-lg max-w-none text-gray-700 prose-headings:text-gray-900 prose-a:text-red-500 prose-img:rounded-lg prose-img:max-h-96 prose-img:object-cover"
+            className="prose prose-lg max-w-none text-gray-700 prose-headings:text-gray-900 prose-a:text-red-500 prose-img:rounded-lg prose-img:max-h-96 prose-img:object-cover leading-relaxed [&>p]:mb-6 [&>figure]:mb-6 [&_img]:rounded-lg [&_img]:max-h-96 [&_img]:object-cover [&_a]:text-red-500 [&>h1]:text-gray-900 [&>h2]:text-gray-900 [&>h3]:text-gray-900 [&>h4]:text-gray-900 [&>h5]:text-gray-900 [&>h6]:text-gray-900"
             dangerouslySetInnerHTML={{ __html: article.content || "<p>Content not available.</p>" }}
           />
           <div className="mt-8 p-4 bg-gray-100 rounded-lg text-sm text-gray-600">
