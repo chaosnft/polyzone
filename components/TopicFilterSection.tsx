@@ -51,8 +51,8 @@ export default function TopicFilterSection({ articles: initialArticles }: Props)
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-2">Explore Crypto Topics</h2>
-          <p className="text-gray-600">Discover blockchain stories, market trends, and regulatory news in your favorite crypto categories from verified sources</p>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">Explore Crypto Topics</h2>
+          <p className="text-gray-600 text-sm">Discover blockchain stories, market trends, and regulatory news in your favorite crypto categories from verified sources</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -71,7 +71,7 @@ export default function TopicFilterSection({ articles: initialArticles }: Props)
               }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className={`px-6 py-2 rounded-full font-bold transition-all duration-300 notranslate ${
+              className={`text-[10px] sm:text-xs px-6 py-2 rounded-full font-bold transition-all duration-300 notranslate ${
                 selectedTopic === topic
                   ? "bg-red-500 text-white shadow-lg"
                   : "bg-gray-200 text-gray-900 hover:bg-gray-300"
@@ -122,9 +122,9 @@ export default function TopicFilterSection({ articles: initialArticles }: Props)
                             {mainArticle.tags.slice(0, 3).map((tag: string) => (
                               <span
                                 key={tag}
-                                className="inline-flex items-center px-2 py-0.5 bg-gray-200 text-gray-700 text-xs font-semibold rounded-full gap-1 notranslate"
+                                className="inline-flex items-center px-2 py-0.5 bg-gray-200 text-gray-700 text-[9px] sm:text-xs font-semibold rounded-full gap-1 notranslate"
                               >
-                                <Tag className="w-3 h-3 flex-shrink-0" />
+                                <Tag className="w-2 h-2 sm:w-3 sm:h-3 flex-shrink-0" />
                                 {tag}
                               </span>
                             ))}
@@ -187,7 +187,7 @@ export default function TopicFilterSection({ articles: initialArticles }: Props)
                 whileTap={{ scale: 0.95 }}
                 className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all duration-300 shadow-lg"
               >
-                <ChevronLeft className="w-6 h-6" />
+                <ChevronLeft className="w-4 h-4" />
               </motion.button>
               <motion.button
                 onClick={nextTopic}
@@ -195,14 +195,14 @@ export default function TopicFilterSection({ articles: initialArticles }: Props)
                 whileTap={{ scale: 0.95 }}
                 className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all duration-300 shadow-lg"
               >
-                <ChevronRight className="w-6 h-6" />
+                <ChevronRight className="w-4 h-4" />
               </motion.button>
               {hasMore && (
                 <motion.button
                   onClick={loadMore}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
-                  className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all duration-300 shadow-lg"
+                  className="text-xs p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all duration-300 shadow-lg"
                 >
                   Load More
                 </motion.button>

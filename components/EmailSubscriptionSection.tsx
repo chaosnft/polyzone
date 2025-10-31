@@ -28,8 +28,8 @@ export default function EmailSubscriptionSection() {
           className="bg-gradient-to-r from-red-50 to-white rounded-2xl p-8 md:p-12 border-2 border-red-200 shadow-lg"
         >
           <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Stay Updated</h2>
-            <p className="text-gray-600 text-lg">Get the latest news delivered to your inbox</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Stay Updated</h2>
+            <p className="text-gray-600 text-sm">Get the latest news delivered to your inbox</p>
           </div>
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
             <div className="flex-1 relative">
@@ -39,7 +39,7 @@ export default function EmailSubscriptionSection() {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-300 focus:border-red-500 focus:outline-none transition-colors duration-300 font-medium"
+                className="text-xs w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-300 focus:border-red-500 focus:outline-none transition-colors duration-300 font-medium"
                 required
               />
             </div>
@@ -47,7 +47,7 @@ export default function EmailSubscriptionSection() {
               type="submit"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap"
+              className="text-xs px-8 py-3 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap"
             >
               Subscribe
             </motion.button>

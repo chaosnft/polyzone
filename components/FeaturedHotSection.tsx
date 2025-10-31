@@ -29,15 +29,15 @@ export default function FeaturedHotSection({ articles }: Props) {
   return (
     <section id="hot" className="pt-24 pb-12 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-8"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">Stay Ahead in Crypto</h2>
-          <p className="text-gray-600 text-lg">Hot latest crypto breaking news, blockchain trends, and market updates from verified sources</p>
-        </motion.div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 uppercase">Stay Ahead</h2>
+          <p className="text-gray-600 text-sm">Hot latest crypto breaking news, blockchain trends, and market updates from verified sources</p>
+        </motion.div> */}
         <motion.div
           key={currentArticle.id}
           initial={{ opacity: 0, scale: 0.95 }}
@@ -66,9 +66,9 @@ export default function FeaturedHotSection({ articles }: Props) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <h3 className="text-3xl md:text-4xl font-bold mb-3 line-clamp-2">{currentArticle.title}</h3>
-                <p className="text-gray-200 text-lg mb-4 line-clamp-2">{currentArticle.excerpt}</p>
-                <div className="flex items-center gap-6 text-sm">
+                <h3 className="text-2xl md:text-3xl font-bold mb-3 line-clamp-2">{currentArticle.title}</h3>
+                <p className="text-gray-200 text-sm mb-4 line-clamp-2">{currentArticle.excerpt}</p>
+                <div className="flex items-center gap-6 text-xs">
                   <span className="notranslate">{currentArticle.author}</span>
                   <span className="notranslate">{currentArticle.date}</span>
                   <span className="notranslate">{currentArticle.readTime}</span>
@@ -76,17 +76,17 @@ export default function FeaturedHotSection({ articles }: Props) {
               </motion.div>
             </div>
           </Link>
-          <span className="absolute top-8 left-8 inline-block px-4 py-2 bg-red-500 text-white text-sm font-bold rounded-full z-10">
-            HOT CRYPTO AGGREGATED NEWS
+          <span className="absolute top-8 left-8 inline-block px-4 py-2 bg-red-500 text-white text-[10px] font-bold rounded-full z-10">
+            HOT AGGREGATED NEWS
           </span>
           {currentArticle.tags && currentArticle.tags.length > 0 && (
-            <div className="absolute bottom-4 right-4 flex gap-2 z-10">
+            <div className="absolute bottom-2 right-3 flex gap-2 z-10">
               {currentArticle.tags.slice(0, 3).map((tag: string) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center px-2 py-0.5 bg-gray-200 text-gray-700 text-xs font-semibold rounded-full gap-1 notranslate"
+                  className="inline-flex items-center px-2 py-0.5 bg-gray-200 text-gray-700 text-[9px] sm:text-xs font-semibold rounded-full gap-1 notranslate"
                 >
-                  <Tag className="w-3 h-3 flex-shrink-0" />
+                  <Tag className="w-2 h-2 sm:w-3 sm:h-3 flex-shrink-0" />
                   {tag}
                 </span>
               ))}
@@ -100,7 +100,7 @@ export default function FeaturedHotSection({ articles }: Props) {
             whileTap={{ scale: 0.95 }}
             className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all duration-300 shadow-lg"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-5 h-5" />
           </motion.button>
           <motion.button
             onClick={nextHot}
@@ -108,7 +108,7 @@ export default function FeaturedHotSection({ articles }: Props) {
             whileTap={{ scale: 0.95 }}
             className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all duration-300 shadow-lg"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-5 h-5" />
           </motion.button>
         </div>
       </div>

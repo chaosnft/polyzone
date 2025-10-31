@@ -12,8 +12,8 @@ export default function AboutSection() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">About Coinzone</h2>
-          <p className="text-gray-600 text-lg leading-relaxed">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">About Coinzone</h2>
+          <p className="text-gray-600 text-sm leading-relaxed">
             Coinzone is your go-to source for cryptocurrency news, blockchain developments, and crypto market insights.
             We aggregate real-time updates on Bitcoin, Ethereum, altcoins, regulations, exchanges, and global trends to empower your crypto journey.
           </p>

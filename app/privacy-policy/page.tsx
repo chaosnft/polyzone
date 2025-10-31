@@ -82,7 +82,7 @@ export default function PrivacyPolicy() {
           </section>
           <section>
             <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
-            <p className="text-gray-700">Questions? Email: [your-email@example.com].</p>
+            <p className="text-gray-700">Questions? Email: [mail@coinzone.site].</p>
           </section>
         </article>
       </div>

@@ -51,7 +51,7 @@ export default function FeaturedNewsSection({ articles: initialArticles }: Props
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-2">Featured Crypto News</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">Featured News</h2>
           <p className="text-gray-600">Curated blockchain stories, market analysis, and regulatory updates from verified sources</p>
         </motion.div>
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
@@ -80,11 +80,11 @@ export default function FeaturedNewsSection({ articles: initialArticles }: Props
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                     <span className="inline-block px-3 py-1 bg-red-500 text-white text-xs font-bold rounded-full mb-3">
-                      FEATURED CRYPTO
+                      FEATURED
                     </span>
-                    <h3 className="text-2xl font-bold mb-2 line-clamp-2">{mainArticle.title}</h3>
-                    <p className="text-gray-200 text-sm line-clamp-2 mb-3">{mainArticle.excerpt}</p>
-                    <div className="flex items-center gap-4 text-xs">
+                    <h3 className="text-xl font-bold mb-2 line-clamp-2">{mainArticle.title}</h3>
+                    <p className="text-gray-200 text-xs line-clamp-2 mb-3">{mainArticle.excerpt}</p>
+                    <div className="flex items-center gap-4 text-[10px]">
                       <span className="notranslate">{mainArticle.author}</span>
                       <span className="notranslate">{mainArticle.date}</span>
                     </div>
@@ -93,9 +93,9 @@ export default function FeaturedNewsSection({ articles: initialArticles }: Props
                         {mainArticle.tags.slice(0, 3).map((tag: string) => (
                           <span
                             key={tag}
-                            className="inline-flex items-center px-2 py-0.5 bg-gray-200 text-gray-700 text-xs font-semibold rounded-full gap-1 notranslate"
+                            className="inline-flex items-center px-2 py-0.5 bg-gray-200 text-gray-700 text-[9px] sm:text-xs font-semibold rounded-full gap-1 notranslate"
                           >
-                            <Tag className="w-3 h-3 flex-shrink-0" />
+                            <Tag className="w-2 h-2 sm:w-3 sm:h-3 flex-shrink-0" />
                             {tag}
                           </span>
                         ))}
@@ -130,16 +130,16 @@ export default function FeaturedNewsSection({ articles: initialArticles }: Props
                   </motion.div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                    <h4 className="text-sm font-bold line-clamp-2 mb-1">{article.title}</h4>
-                    <p className="text-xs text-gray-300 notranslate">{article.date}</p>
+                    <h4 className="text-xs font-bold line-clamp-2 mb-1">{article.title}</h4>
+                    <p className="text-[10px] text-gray-300 notranslate">{article.date}</p>
                     {article.tags && article.tags.length > 0 && (
                       <div className="absolute bottom-4 right-4 flex gap-2">
                         {article.tags.slice(0, 3).map((tag: string) => (
                           <span
                             key={tag}
-                            className="inline-flex items-center px-2 py-0.5 bg-gray-200 text-gray-700 text-xs font-semibold rounded-full gap-1 notranslate"
+                            className="inline-flex items-center px-2 py-0.5 bg-gray-200 text-gray-700 text-[9px] sm:text-xs font-semibold rounded-full gap-1 notranslate"
                           >
-                            <Tag className="w-3 h-3 flex-shrink-0" />
+                            <Tag className="w-2 h-2 sm:w-3 sm:h-3 flex-shrink-0" />
                             {tag}
                           </span>
                         ))}
@@ -158,7 +158,7 @@ export default function FeaturedNewsSection({ articles: initialArticles }: Props
             whileTap={{ scale: 0.95 }}
             className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all duration-300 shadow-lg"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-4 h-4" />
           </motion.button>
           <motion.button
             onClick={nextFeatured}
@@ -166,14 +166,14 @@ export default function FeaturedNewsSection({ articles: initialArticles }: Props
             whileTap={{ scale: 0.95 }}
             className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all duration-300 shadow-lg"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-4 h-4" />
           </motion.button>
           {hasMore && (
             <motion.button
               onClick={loadMore}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all duration-300 shadow-lg"
+              className="p-3 bg-red-500 text-white text-[10px] rounded-full hover:bg-red-600 transition-all duration-300 shadow-lg"
             >
               Load More
             </motion.button>

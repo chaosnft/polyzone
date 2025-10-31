@@ -42,16 +42,16 @@ export default function Footer() {
               <h4 className="text-sm font-semibold text-gray-200">Follow Us:</h4>
               <div className="flex gap-2">
                 {[
-                  {
-                    name: "YouTube",
-                    src: "/social/youtube.webp",
-                    href: "https://youtube.com/@yourchannel",
-                    alt: "YouTube",
-                  },
+                  // {
+                  //   name: "YouTube",
+                  //   src: "/social/youtube.webp",
+                  //   href: "https://youtube.com/@yourchannel",
+                  //   alt: "YouTube",
+                  // },
                   {
                     name: "X",
                     src: "/social/x.webp",
-                    href: "https://x.com/youraccount",
+                    href: "https://x.com/coinzone_0",
                     alt: "X",
                   },
                 ].map((social) => (
